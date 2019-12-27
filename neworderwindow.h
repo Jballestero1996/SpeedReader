@@ -22,10 +22,15 @@ private slots:
 
     void on_PBnewClient_clicked();
 
+    void on_CBname_editTextChanged(const QString &arg1);
+
 private:
     Ui::neworderwindow *ui;
     QSqlTableModel *tableModel;
     QSqlDatabase mDatabase;
+    QMap<QString, QString> typeMap;
+    QMap<QString, QString> facilityMap;
+    QMap<QString, QString> finalMap;
 
 
 };
