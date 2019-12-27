@@ -2,6 +2,8 @@
 #define NEWORDERWINDOW_H
 
 #include <QDialog>
+#include <QSqlDatabase>
+#include "QSqlTableModel"
 
 namespace Ui {
 class neworderwindow;
@@ -22,6 +24,10 @@ private slots:
 
 private:
     Ui::neworderwindow *ui;
+    QSqlTableModel *tableModel;
+    QSqlDatabase mDatabase;
+
+
 };
 
 #endif // NEWORDERWINDOW_H

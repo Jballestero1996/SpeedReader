@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>386</width>
+    <width>437</width>
     <height>363</height>
    </rect>
   </property>
@@ -31,20 +31,10 @@
     <string>Name</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>60</y>
-     <width>113</width>
-     <height>22</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QPushButton" name="PBnewClient">
    <property name="geometry">
     <rect>
-     <x>260</x>
+     <x>310</x>
      <y>40</y>
      <width>111</width>
      <height>51</height>
@@ -82,7 +72,7 @@
   <widget class="QLabel" name="LBFinalCode">
    <property name="geometry">
     <rect>
-     <x>150</x>
+     <x>170</x>
      <y>110</y>
      <width>91</width>
      <height>21</height>
@@ -100,7 +90,7 @@
   <widget class="QLabel" name="LBquantity">
    <property name="geometry">
     <rect>
-     <x>260</x>
+     <x>290</x>
      <y>110</y>
      <width>91</width>
      <height>21</height>
@@ -169,7 +159,7 @@
     <string>Type</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_2">
+  <widget class="QLineEdit" name="LEic">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -179,27 +169,27 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_3">
+  <widget class="QLineEdit" name="LEfc">
    <property name="geometry">
     <rect>
-     <x>150</x>
+     <x>160</x>
      <y>150</y>
      <width>101</width>
      <height>22</height>
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_4">
+  <widget class="QLineEdit" name="LEquantity">
    <property name="geometry">
     <rect>
-     <x>260</x>
+     <x>280</x>
      <y>150</y>
      <width>101</width>
      <height>22</height>
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_5">
+  <widget class="QLineEdit" name="LEfac">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -209,7 +199,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_6">
+  <widget class="QLineEdit" name="LEserial">
    <property name="geometry">
     <rect>
      <x>160</x>
@@ -219,7 +209,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_7">
+  <widget class="QLineEdit" name="LEtype">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -232,7 +222,7 @@
   <widget class="QPushButton" name="PBcreate">
    <property name="geometry">
     <rect>
-     <x>190</x>
+     <x>220</x>
      <y>330</y>
      <width>93</width>
      <height>28</height>
@@ -245,7 +235,7 @@
   <widget class="QPushButton" name="PBcancel">
    <property name="geometry">
     <rect>
-     <x>290</x>
+     <x>330</x>
      <y>330</y>
      <width>93</width>
      <height>28</height>
@@ -253,6 +243,19 @@
    </property>
    <property name="text">
     <string>Cancel</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="CBname">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>60</y>
+     <width>221</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="editable">
+    <bool>true</bool>
    </property>
   </widget>
  </widget>

@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
     tableModel->setTable("Cards");
     tableModel->select();
 
+
     ui->tableView->setModel(tableModel);
 
 
