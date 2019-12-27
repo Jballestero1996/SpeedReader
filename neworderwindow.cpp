@@ -8,6 +8,7 @@
 #include "QSet"
 #include "QMap"
 #include "QIntValidator"
+#include "QString"
 
 neworderwindow::neworderwindow(QWidget *parent) :
     QDialog(parent),
@@ -99,4 +100,56 @@ void neworderwindow::on_CBname_editTextChanged(const QString &arg1)
     }
 
 
+}
+
+void neworderwindow::on_LEfc_textEdited(const QString &arg1)
+{
+
+    if(ui->LEic->text() != "" && arg1.toInt() >= ui->LEic->text().toInt()) {
+
+        int quantityLast = arg1.toInt();
+        int quantityInitial = ui->LEic->text().toInt();
+
+        ui->LEquantity->setText(QString::number(quantityLast - quantityInitial));
+
+    } else if (ui->LEic->text() != "" && arg1.toInt() < ui->LEic->text().toInt()) {
+
+        ui->LEquantity->setText("");
+    }
+
+}
+
+void neworderwindow::on_LEquantity_textEdited(const QString &arg1)
+{
+
+    if(ui->LEic->text() != "") {
+
+        int quantity = arg1.toInt();
+        int initialCode = ui->LEic->text().toInt();
+
+        ui->LEfc->setText(QString::number(initialCode + quantity));
+
+    }
+
+}
+
+void neworderwindow::on_LEic_textEdited(const QString &arg1)
+{
+    if(ui->LEquantity->text() != "") {
+
+        int initialCode = arg1.toInt();
+        int quantity = ui->LEquantity->text().toInt();
+
+        ui->LEfc->setText(QString::number(initialCode + quantity));
+
+
+    } else if (ui->LEfc->text() != "") {
+
+        int initialCode = arg1.toInt();
+        int finalCode = ui->LEfc->text().toInt();
+
+        ui->LEquantity->setText(QString::number(finalCode - initialCode));
+
+
+    }
 }

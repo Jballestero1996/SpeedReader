@@ -24,6 +24,12 @@ private slots:
 
     void on_CBname_editTextChanged(const QString &arg1);
 
+    void on_LEfc_textEdited(const QString &arg1);
+
+    void on_LEquantity_textEdited(const QString &arg1);
+
+    void on_LEic_textEdited(const QString &arg1);
+
 private:
     Ui::neworderwindow *ui;
     QSqlTableModel *tableModel;

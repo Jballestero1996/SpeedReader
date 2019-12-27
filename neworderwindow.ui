@@ -47,6 +47,9 @@
      <bold>true</bold>
     </font>
    </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
    <property name="text">
     <string>New Client</string>
    </property>
@@ -168,6 +171,9 @@
      <height>22</height>
     </rect>
    </property>
+   <property name="focusPolicy">
+    <enum>Qt::ClickFocus</enum>
+   </property>
   </widget>
   <widget class="QLineEdit" name="LEfc">
    <property name="geometry">
@@ -177,6 +183,9 @@
      <width>101</width>
      <height>22</height>
     </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::ClickFocus</enum>
    </property>
   </widget>
   <widget class="QLineEdit" name="LEquantity">
@@ -188,6 +197,9 @@
      <height>22</height>
     </rect>
    </property>
+   <property name="focusPolicy">
+    <enum>Qt::ClickFocus</enum>
+   </property>
   </widget>
   <widget class="QLineEdit" name="LEfac">
    <property name="geometry">
@@ -197,6 +209,9 @@
      <width>101</width>
      <height>22</height>
     </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::ClickFocus</enum>
    </property>
   </widget>
   <widget class="QLineEdit" name="LEserial">
@@ -208,6 +223,9 @@
      <height>22</height>
     </rect>
    </property>
+   <property name="focusPolicy">
+    <enum>Qt::ClickFocus</enum>
+   </property>
   </widget>
   <widget class="QLineEdit" name="LEtype">
    <property name="geometry">
@@ -217,6 +235,9 @@
      <width>331</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::ClickFocus</enum>
    </property>
   </widget>
   <widget class="QPushButton" name="PBcreate">
@@ -253,6 +274,9 @@
      <width>221</width>
      <height>31</height>
     </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::StrongFocus</enum>
    </property>
    <property name="editable">
     <bool>true</bool>
