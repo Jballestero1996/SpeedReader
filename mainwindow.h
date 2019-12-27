@@ -2,10 +2,14 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSqlDatabase>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
+
+class QSqlTableModel;
 
 class MainWindow : public QMainWindow
 {
@@ -22,5 +26,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    QSqlTableModel *tableModel;
+    QSqlDatabase mDatabase;
+
 };
 #endif // MAINWINDOW_H
