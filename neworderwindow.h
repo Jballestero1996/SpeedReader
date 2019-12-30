@@ -42,6 +42,8 @@ private:
     QMap<QString, QString> finalMap;
     QMap<QString, QString> quantityMap;
 
+    void createOrder(QString id, QString name, QString fac, QString ic, QString fc, QString quantity, QString date, QString type);
+
 
 
 };

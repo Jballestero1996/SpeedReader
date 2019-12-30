@@ -8,7 +8,8 @@
 #include "QMap"
 #include "QIntValidator"
 #include "QString"
-#include<QDebug>
+#include <QDebug>
+#include <QDate>
 
 neworderwindow::neworderwindow(QWidget *parent) :
     QDialog(parent),
@@ -173,7 +174,6 @@ void neworderwindow::on_LEic_textEdited(const QString &arg1)
 void neworderwindow::on_PBcreate_clicked()
 {
 
-
     //making sure any of the required fields is not empty
     if (ui->CBname->currentText() == "" || ui->LEfac->text() == "" || ui->LEic->text() == "" || ui->LEfc->text() == "" || ui->LEquantity->text() == "") {
 
@@ -183,16 +183,31 @@ void neworderwindow::on_PBcreate_clicked()
 
     }
 
+    bool flag = false;
 
+    bool orderCreated = false;
+
+    bool orderCanceled = false;
+
+    int biggestID = 0;
+
+    QString date = QDate::currentDate().toString("d/M/yyyy");
 
     QSqlQuery plsWork(mDatabase);
 
     plsWork.clear();
 
 
-    if(plsWork.exec("SELECT * FROM Cards ORDER BY RecordDate DESC")) {
+    if(plsWork.exec("SELECT * FROM Cards ORDER BY ID DESC")) {
 
         while(plsWork.next()) {
+
+            //Gets biggest ID on one go to create a new ID if needed
+            if(!flag) {
+            biggestID = plsWork.value(0).toInt() + 1;
+            flag = true;
+            }
+
 
             QString initialCodeTester = plsWork.value(3).toString();
 
@@ -205,6 +220,11 @@ void neworderwindow::on_PBcreate_clicked()
 
             for (int i = initialCodeTester.toInt(); i <= finalCodeTester.toInt(); i++) {
 
+                if (orderCreated || orderCanceled) {
+
+                    break;
+                }
+
                 int compareInitial= QString::compare(QString::number(i), lineEditInitialCode, Qt::CaseInsensitive);
 
                 int compareFinal = QString::compare(QString::number(i), lineEditFinalCode, Qt::CaseInsensitive);
@@ -214,8 +234,30 @@ void neworderwindow::on_PBcreate_clicked()
                     QString tbox = plsWork.value(1).toString() + " already is using the value " + QString::number(i) + " for one of their orders. This may cause an overlap between orders, do you wish to continue?";
 
 
-                    QMessageBox::question(this, "Duplicate Code", tbox,
+                    QMessageBox::StandardButton alert;
+                    alert = QMessageBox::question(this, "Duplicate Code", tbox,
                                           QMessageBox::Yes|QMessageBox::No);
+
+
+                    if (alert == QMessageBox::Yes) {
+
+
+                        createOrder(QString::number(biggestID), ui->CBname->currentText(), ui->LEfac->text(), ui->LEic->text(),
+                                    ui->LEfc->text(), ui->LEquantity->text(), date, ui->LEtype->text());
+
+
+                        orderCreated = true;
+
+                        close();
+
+
+                    } else {
+
+                        orderCanceled = true;
+
+                    }
+
+
 
 
                 }
@@ -229,9 +271,43 @@ void neworderwindow::on_PBcreate_clicked()
 
     }
 
+    //if there is no repeat and no new order was created create the order
+    if(!orderCreated && !orderCanceled) {
+
+        createOrder(QString::number(biggestID), ui->CBname->currentText(), ui->LEfac->text(), ui->LEic->text(),
+                    ui->LEfc->text(), ui->LEquantity->text(), date, ui->LEtype->text());
+
+
+        close();
+
+
+    }
 
 
 
+}
+
+
+void neworderwindow::createOrder(QString id, QString name, QString fac, QString ic, QString fc, QString quantity, QString date, QString type) {
+
+//    QSqlQuery newAddition(mDatabase);
+
+//    newAddition.clear();
+
+//    newAddition.prepare("INSERT INTO Cards (""ID," "Costumer," "FCode," "InitCode," "FinalCode," "Quantity," "RecordDate," "Note)" "values(?, ?, ?, ?, ?, ?, ?, ?);");
+
+//    newAddition.addBindValue(id);
+//    newAddition.addBindValue(name);
+//    newAddition.addBindValue(fac);
+//    newAddition.addBindValue(ic);
+//    newAddition.addBindValue(fc);
+//    newAddition.addBindValue(quantity);
+//    newAddition.addBindValue(date);
+//    newAddition.addBindValue(type);
+
+//    newAddition.exec();
+
+//    tableModel->select();
 
 
 }
