@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>437</width>
+    <width>416</width>
     <height>363</height>
    </rect>
   </property>
@@ -34,7 +34,7 @@
   <widget class="QPushButton" name="PBnewClient">
    <property name="geometry">
     <rect>
-     <x>310</x>
+     <x>280</x>
      <y>40</y>
      <width>111</width>
      <height>51</height>
@@ -75,8 +75,8 @@
   <widget class="QLabel" name="LBFinalCode">
    <property name="geometry">
     <rect>
-     <x>170</x>
-     <y>110</y>
+     <x>30</x>
+     <y>200</y>
      <width>91</width>
      <height>21</height>
     </rect>
@@ -93,8 +93,8 @@
   <widget class="QLabel" name="LBquantity">
    <property name="geometry">
     <rect>
-     <x>290</x>
-     <y>110</y>
+     <x>150</x>
+     <y>200</y>
      <width>91</width>
      <height>21</height>
     </rect>
@@ -111,8 +111,8 @@
   <widget class="QLabel" name="LBfacilityCode">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>200</y>
+     <x>150</x>
+     <y>110</y>
      <width>101</width>
      <height>21</height>
     </rect>
@@ -124,24 +124,6 @@
    </property>
    <property name="text">
     <string>Facility Code</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="LBserial">
-   <property name="geometry">
-    <rect>
-     <x>160</x>
-     <y>200</y>
-     <width>111</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>10</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Serial Number</string>
    </property>
   </widget>
   <widget class="QLabel" name="LBtype">
@@ -178,8 +160,8 @@
   <widget class="QLineEdit" name="LEfc">
    <property name="geometry">
     <rect>
-     <x>160</x>
-     <y>150</y>
+     <x>30</x>
+     <y>240</y>
      <width>101</width>
      <height>22</height>
     </rect>
@@ -191,8 +173,8 @@
   <widget class="QLineEdit" name="LEquantity">
    <property name="geometry">
     <rect>
-     <x>280</x>
-     <y>150</y>
+     <x>150</x>
+     <y>240</y>
      <width>101</width>
      <height>22</height>
     </rect>
@@ -204,21 +186,8 @@
   <widget class="QLineEdit" name="LEfac">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>240</y>
-     <width>101</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::ClickFocus</enum>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="LEserial">
-   <property name="geometry">
-    <rect>
-     <x>160</x>
-     <y>240</y>
+     <x>150</x>
+     <y>150</y>
      <width>101</width>
      <height>22</height>
     </rect>
@@ -243,7 +212,7 @@
   <widget class="QPushButton" name="PBcreate">
    <property name="geometry">
     <rect>
-     <x>220</x>
+     <x>60</x>
      <y>330</y>
      <width>93</width>
      <height>28</height>
@@ -256,7 +225,7 @@
   <widget class="QPushButton" name="PBcancel">
    <property name="geometry">
     <rect>
-     <x>330</x>
+     <x>270</x>
      <y>330</y>
      <width>93</width>
      <height>28</height>

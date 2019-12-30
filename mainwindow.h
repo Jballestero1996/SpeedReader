@@ -18,6 +18,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    QSqlDatabase mDatabase;
 
 private slots:
     void on_PBnewOrder_clicked();
@@ -27,7 +28,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QSqlTableModel *tableModel;
-    QSqlDatabase mDatabase;
+
 
 };
 #endif // MAINWINDOW_H

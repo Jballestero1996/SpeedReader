@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QSqlDatabase>
 #include "QSqlTableModel"
+#include "QSqlQuery"
 
 namespace Ui {
 class neworderwindow;
@@ -30,6 +31,8 @@ private slots:
 
     void on_LEic_textEdited(const QString &arg1);
 
+    void on_PBcreate_clicked();
+
 private:
     Ui::neworderwindow *ui;
     QSqlTableModel *tableModel;
@@ -37,6 +40,8 @@ private:
     QMap<QString, QString> typeMap;
     QMap<QString, QString> facilityMap;
     QMap<QString, QString> finalMap;
+    QMap<QString, QString> quantityMap;
+
 
 
 };

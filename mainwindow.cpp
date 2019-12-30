@@ -51,5 +51,7 @@ void MainWindow::on_PBnewOrder_clicked()
 
 void MainWindow::on_PBexit_clicked()
 {
+
+    mDatabase.close();
     close();
 }
