@@ -5,6 +5,8 @@
 #include <QSqlDatabase>
 #include "QSqlTableModel"
 #include "QSqlQuery"
+#include "QSet"
+#include <QList>
 
 namespace Ui {
 class neworderwindow;
@@ -33,16 +35,18 @@ private slots:
 
     void on_PBcreate_clicked();
 
+    void on_CBcardtype_currentIndexChanged(const QString &arg1);
+
 private:
     Ui::neworderwindow *ui;
     QSqlTableModel *tableModel;
     QSqlDatabase mDatabase;
-    QMap<QString, QString> typeMap;
     QMap<QString, QString> facilityMap;
     QMap<QString, QString> finalMap;
     QMap<QString, QString> quantityMap;
+    QList<QString> cardCode;
 
-    void createOrder(QString id, QString name, QString fac, QString ic, QString fc, QString quantity, QString date, QString type);
+    void createOrder(QString name, QString fac, QString ic, QString fc, QString quantity, QString date, QString type);
 
 
 

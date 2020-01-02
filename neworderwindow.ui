@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>neworderwindow</class>
  <widget class="QDialog" name="neworderwindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -196,19 +199,6 @@
     <enum>Qt::ClickFocus</enum>
    </property>
   </widget>
-  <widget class="QLineEdit" name="LEtype">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>300</y>
-     <width>331</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::ClickFocus</enum>
-   </property>
-  </widget>
   <widget class="QPushButton" name="PBcreate">
    <property name="geometry">
     <rect>
@@ -249,6 +239,32 @@
    </property>
    <property name="editable">
     <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="LBimage">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>150</y>
+     <width>131</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="CBcardtype">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>300</y>
+     <width>221</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="editable">
+    <bool>false</bool>
    </property>
   </widget>
  </widget>

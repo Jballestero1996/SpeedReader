@@ -4,12 +4,14 @@
 #include "QSqlDatabase"
 #include "QSqlError"
 #include "QMessageBox"
-#include "QSet"
 #include "QMap"
 #include "QIntValidator"
 #include "QString"
 #include <QDebug>
 #include <QDate>
+#include <QPixmap>
+
+
 
 neworderwindow::neworderwindow(QWidget *parent) :
     QDialog(parent),
@@ -32,10 +34,11 @@ neworderwindow::neworderwindow(QWidget *parent) :
                  ridOfDuplicates.insert(query.value(1).toString());
 
                  //Very rough approach but easy to work with since it stores all the values of interest for the last use
-                 typeMap.insert(query.value(1).toString(),query.value(7).toString());
                  facilityMap.insert(query.value(1).toString(),query.value(2).toString());
                  finalMap.insert(query.value(1).toString(),query.value(4).toString());
                  quantityMap.insert(query.value(1).toString(), query.value(5).toString());
+
+
 
             }
 
@@ -48,8 +51,23 @@ neworderwindow::neworderwindow(QWidget *parent) :
     }
 
 
+    //Hard coded the most popular card types to show images
+    cardCode.append("HT2200");
+    cardCode.append("HT2211");
+    cardCode.append("HT2400");
+    cardCode.append("HT2202");
+    cardCode.append("HT2100");
+    cardCode.append("HT2408");
+
+    for (int i = 0; i < cardCode.size(); i++) {
+
+        ui->CBcardtype->addItem(cardCode.value(i));
+    }
+
+
     //Necessary to make the first calculation
     on_CBname_editTextChanged(ui->CBname->currentText());
+    on_CBcardtype_currentIndexChanged(ui->CBcardtype->currentText());
 
 
     //Setting all the Line Edits of interest to be digits only
@@ -59,6 +77,9 @@ neworderwindow::neworderwindow(QWidget *parent) :
     ui->LEfc->setValidator(numsOnly);
     ui->LEfac->setValidator(numsOnly);
     ui->LEquantity->setValidator(numsOnly);
+
+
+
 
 }
 
@@ -105,13 +126,6 @@ void neworderwindow::on_CBname_editTextChanged(const QString &arg1)
 
         on_LEquantity_textEdited(text2);
 
-    }
-
-    if(typeMap.contains(arg1)) {
-
-        QString text = typeMap.value(arg1);
-
-        ui->LEtype->setText(text);
     }
 
 
@@ -183,13 +197,9 @@ void neworderwindow::on_PBcreate_clicked()
 
     }
 
-    bool flag = false;
-
     bool orderCreated = false;
 
     bool orderCanceled = false;
-
-    int biggestID = 0;
 
     QString date = QDate::currentDate().toString("d/M/yyyy");
 
@@ -201,13 +211,6 @@ void neworderwindow::on_PBcreate_clicked()
     if(plsWork.exec("SELECT * FROM Cards ORDER BY ID DESC")) {
 
         while(plsWork.next()) {
-
-            //Gets biggest ID on one go to create a new ID if needed
-            if(!flag) {
-            biggestID = plsWork.value(0).toInt() + 1;
-            flag = true;
-            }
-
 
             QString initialCodeTester = plsWork.value(3).toString();
 
@@ -242,13 +245,11 @@ void neworderwindow::on_PBcreate_clicked()
                     if (alert == QMessageBox::Yes) {
 
 
-                        createOrder(QString::number(biggestID), ui->CBname->currentText(), ui->LEfac->text(), ui->LEic->text(),
-                                    ui->LEfc->text(), ui->LEquantity->text(), date, ui->LEtype->text());
+                        createOrder(ui->CBname->currentText(), ui->LEfac->text(), ui->LEic->text(),
+                                    ui->LEfc->text(), ui->LEquantity->text(), date, ui->CBcardtype->currentText());
 
 
                         orderCreated = true;
-
-                        close();
 
 
                     } else {
@@ -274,11 +275,8 @@ void neworderwindow::on_PBcreate_clicked()
     //if there is no repeat and no new order was created create the order
     if(!orderCreated && !orderCanceled) {
 
-        createOrder(QString::number(biggestID), ui->CBname->currentText(), ui->LEfac->text(), ui->LEic->text(),
-                    ui->LEfc->text(), ui->LEquantity->text(), date, ui->LEtype->text());
-
-
-        close();
+        createOrder(ui->CBname->currentText(), ui->LEfac->text(), ui->LEic->text(),
+                    ui->LEfc->text(), ui->LEquantity->text(), date, ui->CBcardtype->currentText());
 
 
     }
@@ -288,26 +286,88 @@ void neworderwindow::on_PBcreate_clicked()
 }
 
 
-void neworderwindow::createOrder(QString id, QString name, QString fac, QString ic, QString fc, QString quantity, QString date, QString type) {
+void neworderwindow::createOrder(QString name, QString fac, QString ic, QString fc, QString quantity, QString date, QString type) {
 
-//    QSqlQuery newAddition(mDatabase);
+    QSqlQuery newAddition(mDatabase);
 
-//    newAddition.clear();
+    newAddition.clear();
 
-//    newAddition.prepare("INSERT INTO Cards (""ID," "Costumer," "FCode," "InitCode," "FinalCode," "Quantity," "RecordDate," "Note)" "values(?, ?, ?, ?, ?, ?, ?, ?);");
+    newAddition.prepare("INSERT INTO Cards (Costumer, FCode, InitCode, FinalCode, Quantity, RecordDate, CardType) VALUES (?,?,?,?,?,?,?);");
 
-//    newAddition.addBindValue(id);
-//    newAddition.addBindValue(name);
-//    newAddition.addBindValue(fac);
-//    newAddition.addBindValue(ic);
-//    newAddition.addBindValue(fc);
-//    newAddition.addBindValue(quantity);
-//    newAddition.addBindValue(date);
-//    newAddition.addBindValue(type);
+    newAddition.addBindValue(name);
+    newAddition.addBindValue(fac);
+    newAddition.addBindValue(ic);
+    newAddition.addBindValue(fc);
+    newAddition.addBindValue(quantity);
+    newAddition.addBindValue(date);
+    newAddition.addBindValue(type);
 
-//    newAddition.exec();
+    newAddition.exec();
 
-//    tableModel->select();
+    close();
+
+
+
+
+}
+
+
+void neworderwindow::on_CBcardtype_currentIndexChanged(const QString &arg1)
+{
+
+    bool edited = false;
+    for (int i = 0; i < cardCode.size(); i++){
+
+        if(arg1.contains(cardCode.value(i))) {
+
+            edited = true;
+
+            if (QString::compare(cardCode.value(i), "HT2200") == 0) {
+
+                QPixmap image("C:\\Projects\\HT2200.png");
+                ui->LBimage->setPixmap(image.scaled(150, 150, Qt::KeepAspectRatio));
+
+            } else if (QString::compare(cardCode.value(i), "HT2211") == 0) {
+
+                QPixmap image("C:\\Projects\\HT2211.png");
+                ui->LBimage->setPixmap(image.scaled(150, 150, Qt::KeepAspectRatio));
+
+            } else if (QString::compare(cardCode.value(i), "HT2400") == 0) {
+
+                QPixmap image("C:\\Projects\\HT2400.png");
+                ui->LBimage->setPixmap(image.scaled(150, 150, Qt::KeepAspectRatio));
+
+            } else if (QString::compare(cardCode.value(i), "HT2202") == 0) {
+
+                QPixmap image("C:\\Projects\\HT2202.png");
+                ui->LBimage->setPixmap(image.scaled(150, 150, Qt::KeepAspectRatio));
+
+            } else if (QString::compare(cardCode.value(i), "HT2100") == 0) {
+
+                QPixmap image("C:\\Projects\\HT2100.png");
+                ui->LBimage->setPixmap(image.scaled(150, 150, Qt::KeepAspectRatio));
+
+            }   else if (QString::compare(cardCode.value(i), "HT2408") == 0) {
+
+                QPixmap image("C:\\Projects\\HT2408.png");
+                ui->LBimage->setPixmap(image.scaled(150, 150, Qt::KeepAspectRatio));
+
+            }
+
+
+
+        }
+
+
+    }
+
+    if (!edited) {
+
+            QPixmap image("C:\\Projects\\HT2100.png");
+            ui->LBimage->setPixmap(image.scaled(0, 0, Qt::KeepAspectRatio));
+
+
+    }
 
 
 }

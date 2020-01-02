@@ -19,15 +19,17 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     QSqlDatabase mDatabase;
-    QSqlTableModel *tableModel;
+
 
 private slots:
     void on_PBnewOrder_clicked();
 
     void on_PBexit_clicked();
 
+
 private:
     Ui::MainWindow *ui;
+    QSqlTableModel *tableModel;
 
 
 

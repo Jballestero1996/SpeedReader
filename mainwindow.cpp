@@ -55,3 +55,4 @@ void MainWindow::on_PBexit_clicked()
     mDatabase.close();
     close();
 }
+
