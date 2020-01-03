@@ -244,12 +244,21 @@ void neworderwindow::on_PBcreate_clicked()
 
                     if (alert == QMessageBox::Yes) {
 
+                        if (nameDuplicateDetector()) {
 
-                        createOrder(ui->CBname->currentText(), ui->LEfac->text(), ui->LEic->text(),
-                                    ui->LEfc->text(), ui->LEquantity->text(), date, ui->CBcardtype->currentText());
+                            createOrder(ui->CBname->currentText(), ui->LEfac->text(), ui->LEic->text(),
+                                        ui->LEfc->text(), ui->LEquantity->text(), date, ui->CBcardtype->currentText());
 
 
-                        orderCreated = true;
+                            orderCreated = true;
+
+
+
+                        } else {
+
+                            orderCanceled = true;
+                        }
+
 
 
                     } else {
@@ -271,6 +280,13 @@ void neworderwindow::on_PBcreate_clicked()
 
 
     }
+
+
+    if (orderCreated || orderCanceled || !nameDuplicateDetector()) {
+
+        return;
+    }
+
 
     //if there is no repeat and no new order was created create the order
     if(!orderCreated && !orderCanceled) {
@@ -386,6 +402,9 @@ void neworderwindow::updateCustomerList(QString updated, bool isARepeat) {
 
     if (!isARepeat) {
 
+
+        ridOfDuplicates.insert(updated);
+
         ui->CBname->addItem(updated);
 
         ui->CBname->setCurrentText(updated);
@@ -410,5 +429,37 @@ void neworderwindow::updateFacilityCode(QMap<QString, QString> newMap, QString k
 
     facilityMap.insert(key, newMap.value(key));
 
+
+}
+
+bool neworderwindow::nameDuplicateDetector() {
+
+    if (!ridOfDuplicates.contains(ui->CBname->currentText()))  {
+
+        QString tbox = ui->CBname->currentText() + " is a new Client that has not been registered. Do you wish to continue?";
+
+        QMessageBox::StandardButton alert;
+        alert = QMessageBox::question(this, "Duplicate Code", tbox,
+                              QMessageBox::Yes|QMessageBox::No);
+
+
+        if (alert == QMessageBox::Yes) {
+
+
+            return true;
+
+
+
+        } else {
+
+            return false;
+
+
+        }
+
+    }
+
+
+    return true;
 
 }

@@ -5,7 +5,6 @@
 #include "QSqlTableModel"
 #include "QSqlError"
 #include "QMessageBox"
-#include <QtAlgorithms>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -61,7 +60,7 @@ void MainWindow::on_PBRefresh_clicked()
 {
     tableModel->select();
 
-    tableModel->selectRow(1);
+    tableModel->selectRow(0);
 }
 
 void MainWindow::updateDB() {

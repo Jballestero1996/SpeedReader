@@ -58,7 +58,8 @@ private:
     QList<QString> cardCode;
     MainWindow *firstWindow;
     QSet<QString> ridOfDuplicates;
-    QString facilityForTransfer;
+
+    bool nameDuplicateDetector();
 
     void createOrder(QString name, QString fac, QString ic, QString fc, QString quantity, QString date, QString type);
 
