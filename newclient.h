@@ -2,6 +2,13 @@
 #define NEWCLIENT_H
 
 #include <QDialog>
+#include "neworderwindow.h"
+#include <QList>
+#include <QMap>
+#include <QSet>
+
+
+class neworderwindow;
 
 namespace Ui {
 class newclient;
@@ -13,13 +20,26 @@ class newclient : public QDialog
 
 public:
     explicit newclient(QWidget *parent = nullptr);
+
+//This constructor stays here as proof of a developing civilization
+//newclient(QWidget *parent, QSet<QString> duplicates, QMap<QString, QString> facMap);
     ~newclient();
 
 private slots:
     void on_PBcancel_clicked();
 
+    void on_PBcreate_clicked();
+
 private:
     Ui::newclient *ui;
+
+    neworderwindow *newOrder;
+
+    QList<QString> nameList;
+
+    QMap<QString, QString> facilityMap;
+
+
 };
 
 #endif // NEWCLIENT_H

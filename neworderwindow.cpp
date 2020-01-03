@@ -7,7 +7,6 @@
 #include "QMap"
 #include "QIntValidator"
 #include "QString"
-#include <QDebug>
 #include <QDate>
 #include <QPixmap>
 
@@ -20,8 +19,9 @@ neworderwindow::neworderwindow(QWidget *parent) :
     ui->setupUi(this);
     this->setFixedSize(this->size());
 
+    firstWindow = qobject_cast<MainWindow*>(parent);
+
     //Querying the names from the cards to fit into the drop down list
-    QSet<QString> ridOfDuplicates;
     QSqlQuery query;
 
     if (query.exec("SELECT * FROM Cards ORDER BY RecordDate DESC")) {
@@ -95,7 +95,7 @@ void neworderwindow::on_PBcancel_clicked()
 
 void neworderwindow::on_PBnewClient_clicked()
 {
-     newclient *nc = new newclient();
+     newclient *nc = new newclient(this);
 
      nc->setModal(true);
 
@@ -306,6 +306,7 @@ void neworderwindow::createOrder(QString name, QString fac, QString ic, QString 
 
     close();
 
+    firstWindow->updateDB();
 
 
 
@@ -316,12 +317,14 @@ void neworderwindow::on_CBcardtype_currentIndexChanged(const QString &arg1)
 {
 
     bool edited = false;
+
     for (int i = 0; i < cardCode.size(); i++){
 
         if(arg1.contains(cardCode.value(i))) {
 
             edited = true;
 
+            //Change this to a switch case in the future
             if (QString::compare(cardCode.value(i), "HT2200") == 0) {
 
                 QPixmap image("C:\\Projects\\HT2200.png");
@@ -368,6 +371,44 @@ void neworderwindow::on_CBcardtype_currentIndexChanged(const QString &arg1)
 
 
     }
+
+
+}
+
+QSet<QString> neworderwindow::getRidOfDuplicateList() {
+
+    return ridOfDuplicates;
+
+}
+
+void neworderwindow::updateCustomerList(QString updated, bool isARepeat) {
+
+
+    if (!isARepeat) {
+
+        ui->CBname->addItem(updated);
+
+        ui->CBname->setCurrentText(updated);
+
+
+
+    }
+
+
+    on_CBname_editTextChanged(updated);
+
+
+}
+
+QMap<QString, QString> neworderwindow::getFacilityMap() {
+
+    return facilityMap;
+
+}
+
+void neworderwindow::updateFacilityCode(QMap<QString, QString> newMap, QString key) {
+
+    facilityMap.insert(key, newMap.value(key));
 
 
 }

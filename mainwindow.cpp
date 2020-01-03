@@ -5,7 +5,7 @@
 #include "QSqlTableModel"
 #include "QSqlError"
 #include "QMessageBox"
-
+#include <QtAlgorithms>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -25,7 +25,6 @@ MainWindow::MainWindow(QWidget *parent)
     tableModel->setTable("Cards");
     tableModel->select();
 
-
     ui->tableView->setModel(tableModel);
 
 
@@ -41,7 +40,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_PBnewOrder_clicked()
 {
-    neworderwindow *newOrderWindow = new neworderwindow();
+    neworderwindow *newOrderWindow = new neworderwindow(this);
 
     newOrderWindow->setModal(true);
 
@@ -56,3 +55,17 @@ void MainWindow::on_PBexit_clicked()
     close();
 }
 
+
+
+void MainWindow::on_PBRefresh_clicked()
+{
+    tableModel->select();
+
+    tableModel->selectRow(1);
+}
+
+void MainWindow::updateDB() {
+
+    tableModel->select();
+
+}

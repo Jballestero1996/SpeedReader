@@ -3,10 +3,10 @@
 
 #include <QDialog>
 #include <QSqlDatabase>
-#include "QSqlTableModel"
 #include "QSqlQuery"
 #include "QSet"
 #include <QList>
+#include "mainwindow.h"
 
 namespace Ui {
 class neworderwindow;
@@ -19,6 +19,16 @@ class neworderwindow : public QDialog
 public:
     explicit neworderwindow(QWidget *parent = nullptr);
     ~neworderwindow();
+
+    QSet<QString> getRidOfDuplicateList();
+
+    QMap<QString, QString> getFacilityMap();
+
+    void updateCustomerList(QString, bool);
+
+    void updateFacilityCode(QMap<QString, QString>, QString);
+
+
 
 private slots:
     void on_PBcancel_clicked();
@@ -37,14 +47,18 @@ private slots:
 
     void on_CBcardtype_currentIndexChanged(const QString &arg1);
 
+
+
 private:
     Ui::neworderwindow *ui;
-    QSqlTableModel *tableModel;
     QSqlDatabase mDatabase;
     QMap<QString, QString> facilityMap;
     QMap<QString, QString> finalMap;
     QMap<QString, QString> quantityMap;
     QList<QString> cardCode;
+    MainWindow *firstWindow;
+    QSet<QString> ridOfDuplicates;
+    QString facilityForTransfer;
 
     void createOrder(QString name, QString fac, QString ic, QString fc, QString quantity, QString date, QString type);
 
