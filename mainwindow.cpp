@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "neworderwindow.h"
+#include "editorder.h"
 #include "QSqlDatabase"
 #include "QSqlTableModel"
 #include "QSqlError"
@@ -27,8 +28,6 @@ MainWindow::MainWindow(QWidget *parent)
     tableModel->select();
 
     ui->tableView->setModel(tableModel);
-
-
 
 
 }
@@ -103,5 +102,17 @@ void MainWindow::on_tableView_pressed(const QModelIndex &index)
 
 void MainWindow::on_PBeditOrder_clicked()
 {
+
+    editorder *editOrderWindow = new editorder(this);
+
+    editOrderWindow->setModal(true);
+
+    editOrderWindow->exec();
+
+}
+
+QList<QString> MainWindow::getOrderInfo() {
+
+    return rowInfo;
 
 }

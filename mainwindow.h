@@ -21,6 +21,7 @@ public:
     ~MainWindow();
     QSqlDatabase mDatabase;
     void updateDB();
+    QList<QString> getOrderInfo();
 
 private slots:
     void on_PBnewOrder_clicked();

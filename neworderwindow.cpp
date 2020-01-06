@@ -1,7 +1,6 @@
 #include "neworderwindow.h"
 #include "ui_neworderwindow.h"
 #include "newclient.h"
-#include "QSqlDatabase"
 #include "QSqlError"
 #include "QMessageBox"
 #include "QMap"
@@ -257,7 +256,7 @@ void neworderwindow::on_PBcreate_clicked()
 
                 if (orderCreated || orderCanceled) {
 
-                    break;
+                    return;
                 }
 
                 int compareInitial= QString::compare(QString::number(i), lineEditInitialCode, Qt::CaseInsensitive);
