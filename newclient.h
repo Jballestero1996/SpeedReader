@@ -8,7 +8,6 @@
 #include <QSet>
 
 
-class neworderwindow;
 
 namespace Ui {
 class newclient;

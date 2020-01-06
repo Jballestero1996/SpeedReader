@@ -25,9 +25,6 @@ newclient::newclient(QWidget *parent) :
 
 
 
-
-
-
 }
 
 
@@ -94,6 +91,7 @@ void newclient::on_PBcreate_clicked()
 
 
 
+
             } else {
 
                 return;
@@ -111,6 +109,8 @@ void newclient::on_PBcreate_clicked()
     newOrder->updateFacilityCode(facilityMap, ui->LEname->text());
 
     newOrder->updateCustomerList(ui->LEname->text(), isARepeat);
+
+    newOrder->facAccepted(facilityAccepted);
 
     close();
 

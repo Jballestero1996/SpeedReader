@@ -20,6 +20,7 @@ neworderwindow::neworderwindow(QWidget *parent) :
     this->setFixedSize(this->size());
 
     firstWindow = qobject_cast<MainWindow*>(parent);
+    facWasChecked = false;
 
     //Querying the names from the cards to fit into the drop down list
     QSqlQuery query;
@@ -33,7 +34,7 @@ neworderwindow::neworderwindow(QWidget *parent) :
                  ui->CBname->addItem(query.value(1).toString());
                  ridOfDuplicates.insert(query.value(1).toString());
 
-                 //Very rough approach but easy to work with since it stores all the values of interest for the last use
+                 //Very rough approach but easy to work with since it stores all the values of interest from the last use
                  facilityMap.insert(query.value(1).toString(),query.value(2).toString());
                  finalMap.insert(query.value(1).toString(),query.value(4).toString());
                  quantityMap.insert(query.value(1).toString(), query.value(5).toString());
@@ -207,7 +208,6 @@ void neworderwindow::on_PBcreate_clicked()
 
     plsWork.clear();
 
-
     if(plsWork.exec("SELECT * FROM Cards ORDER BY ID DESC")) {
 
         while(plsWork.next()) {
@@ -221,6 +221,38 @@ void neworderwindow::on_PBcreate_clicked()
             QString lineEditFinalCode = ui->LEfc->text();
 
 
+            //Checks if more than 1 facility code match if they haven't been checked in the newclient class
+            if (!facWasChecked) {
+
+                if (facilityMap.contains(plsWork.value(1).toString()) && !ridOfDuplicates.contains(ui->CBname->currentText())) {
+
+                    QString tbox = plsWork.value(1).toString() + " already has facility code " + facilityMap.value(plsWork.value(1).toString()) + ". This could cause an overlap in orders. Do you wish to continue?";
+
+                    QMessageBox::StandardButton alert;
+                    alert = QMessageBox::question(this, "Duplicate Code", tbox,
+                                          QMessageBox::Yes|QMessageBox::No);
+
+
+                    if (alert == QMessageBox::Yes) {
+
+
+                        facWasChecked = true;
+
+
+                    } else {
+
+
+                        return;
+                    }
+
+
+
+                }
+
+            }
+
+
+            //Check for Initial or Final Code similarities
             for (int i = initialCodeTester.toInt(); i <= finalCodeTester.toInt(); i++) {
 
                 if (orderCreated || orderCanceled) {
@@ -268,8 +300,6 @@ void neworderwindow::on_PBcreate_clicked()
                     }
 
 
-
-
                 }
 
 
@@ -296,7 +326,6 @@ void neworderwindow::on_PBcreate_clicked()
 
 
     }
-
 
 
 }
@@ -399,7 +428,6 @@ QSet<QString> neworderwindow::getRidOfDuplicateList() {
 
 void neworderwindow::updateCustomerList(QString updated, bool isARepeat) {
 
-
     if (!isARepeat) {
 
 
@@ -461,5 +489,13 @@ bool neworderwindow::nameDuplicateDetector() {
 
 
     return true;
+
+}
+
+
+void neworderwindow::facAccepted(bool isAccepted) {
+
+   facWasChecked = isAccepted;
+
 
 }

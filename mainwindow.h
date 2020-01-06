@@ -3,7 +3,8 @@
 
 #include <QMainWindow>
 #include <QSqlDatabase>
-
+#include <QModelIndex>
+#include <QList>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -29,10 +30,15 @@ private slots:
 
     void on_PBRefresh_clicked();
 
+    void on_tableView_pressed(const QModelIndex &index);
+
+    void on_PBeditOrder_clicked();
+
 private:
     Ui::MainWindow *ui;
     QSqlTableModel *tableModel;
-
+    QModelIndex curr;
+    QList<QString> rowInfo;
 
 
 };

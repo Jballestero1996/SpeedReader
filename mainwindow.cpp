@@ -5,6 +5,8 @@
 #include "QSqlTableModel"
 #include "QSqlError"
 #include "QMessageBox"
+#include <QtDebug>
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -61,10 +63,45 @@ void MainWindow::on_PBRefresh_clicked()
     tableModel->select();
 
     tableModel->selectRow(0);
+
+    ui->PBeditOrder->setEnabled(false);
 }
 
 void MainWindow::updateDB() {
 
     tableModel->select();
+
+    ui->PBeditOrder->setEnabled(false);
+
+}
+
+
+
+void MainWindow::on_tableView_pressed(const QModelIndex &index)
+{
+    ui->PBeditOrder->setEnabled(true);
+
+    rowInfo.clear();
+
+    curr = index;
+
+    int test = index.row();
+
+
+    for (int i = 0; i < tableModel->columnCount(); i++) {
+
+        rowInfo.append(tableModel->index(test, i).data().toString());
+
+
+    }
+
+
+    qDebug() << rowInfo << endl;
+
+
+}
+
+void MainWindow::on_PBeditOrder_clicked()
+{
 
 }

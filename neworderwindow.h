@@ -28,6 +28,8 @@ public:
 
     void updateFacilityCode(QMap<QString, QString>, QString);
 
+    void facAccepted(bool isAccepted);
+
 
 
 private slots:
@@ -49,6 +51,7 @@ private slots:
 
 
 
+
 private:
     Ui::neworderwindow *ui;
     QSqlDatabase mDatabase;
@@ -58,6 +61,7 @@ private:
     QList<QString> cardCode;
     MainWindow *firstWindow;
     QSet<QString> ridOfDuplicates;
+    bool facWasChecked;
 
     bool nameDuplicateDetector();
 
