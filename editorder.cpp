@@ -3,6 +3,7 @@
 #include <QValidator>
 #include <QSqlQuery>
 #include <QMessageBox>
+#include <QtDebug>
 
 editorder::editorder(QWidget *parent) :
     QDialog(parent),
@@ -43,7 +44,7 @@ editorder::editorder(QWidget *parent) :
     //Shows picture of card if it is the same format
     if(cardCode.contains(rowInfo.value(7))) {
 
-        on_CBtype_currentIndexChanged(rowInfo.value(7));
+        on_CBtype_currentTextChanged(rowInfo.value(7));
 
     }
 
@@ -174,7 +175,7 @@ void editorder::on_PBedit_clicked()
                         QString tbox = query.value(1).toString() + " is already using " + QString::number(i) + " as one of their codes. This could cause an overlap in orders. Do you wish to continue?";
 
                         QMessageBox::StandardButton alert;
-                        alert = QMessageBox::question(this, "Duplicate Code", tbox,
+                        alert = QMessageBox::critical(this, "Duplicate Code", tbox,
                                               QMessageBox::Yes|QMessageBox::No);
 
 
@@ -210,7 +211,48 @@ void editorder::on_PBedit_clicked()
 
 }
 
-void editorder::on_CBtype_currentIndexChanged(const QString &arg1)
+
+void editorder::performChange() {
+
+    QSqlQuery editQuery;
+
+    editQuery.clear();
+
+    QString id = mainWin->getOrderInfo().value(0);
+
+    editQuery.prepare("UPDATE Cards SET Costumer=:name, FCode=:fac, InitCode=:ic, FinalCode=:fc, Quantity=:quant, CardType=:type WHERE ID=" + id);
+
+    editQuery.bindValue(":name", ui->LEname->text());
+    editQuery.bindValue(":fac", ui->LEfac->text());
+    editQuery.bindValue(":ic", ui->LEic->text());
+    editQuery.bindValue(":fc", ui->LEfc->text());
+    editQuery.bindValue(":quant", ui->LEquant->text());
+    editQuery.bindValue(":type", ui->CBtype->currentText());
+
+    editQuery.exec();
+
+    mainWin->updateDB();
+
+    close();
+
+
+}
+
+void editorder::on_LEfac_textEdited(const QString &arg1)
+{
+    if (arg1.toInt() > 255) {
+
+        QString validFac = arg1.at(0);
+
+        validFac += arg1.at(1);
+
+        ui->LEfac->setText(validFac);
+
+
+    }
+}
+
+void editorder::on_CBtype_currentTextChanged(const QString &arg1)
 {
     bool edited = false;
 
@@ -262,51 +304,8 @@ void editorder::on_CBtype_currentIndexChanged(const QString &arg1)
 
     if (!edited) {
 
-            QPixmap image("C:\\Projects\\HT2100.png");
+            QPixmap image("C:\\Projects\\Empty.png");
             ui->LBimage->setPixmap(image.scaled(0, 0, Qt::KeepAspectRatio));
-
-    }
-
-}
-
-
-void editorder::performChange() {
-
-    QSqlQuery editQuery;
-
-    editQuery.clear();
-
-
-    QString id = mainWin->getOrderInfo().value(0);
-
-    editQuery.prepare("UPDATE Cards SET Costumer=:name, FCode=:fac, InitCode=:ic, FinalCode=:fc, Quantity=:quant, CardType=:type WHERE ID=" + id);
-
-    editQuery.bindValue(":name", ui->LEname->text());
-    editQuery.bindValue(":fac", ui->LEfac->text());
-    editQuery.bindValue(":ic", ui->LEic->text());
-    editQuery.bindValue(":fc", ui->LEfc->text());
-    editQuery.bindValue(":quant", ui->LEquant->text());
-    editQuery.bindValue(":type", ui->CBtype->currentText());
-
-    editQuery.exec();
-
-    mainWin->updateDB();
-
-    close();
-
-
-}
-
-void editorder::on_LEfac_textEdited(const QString &arg1)
-{
-    if (arg1.toInt() > 255) {
-
-        QString validFac = arg1.at(0);
-
-        validFac += arg1.at(1);
-
-        ui->LEfac->setText(validFac);
-
 
     }
 }

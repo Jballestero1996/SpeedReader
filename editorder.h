@@ -28,9 +28,9 @@ private slots:
 
     void on_LEquant_textEdited(const QString &arg1);
 
-    void on_CBtype_currentIndexChanged(const QString &arg1);
-
     void on_LEfac_textEdited(const QString &arg1);
+
+    void on_CBtype_currentTextChanged(const QString &arg1);
 
 private:
     Ui::editorder *ui;

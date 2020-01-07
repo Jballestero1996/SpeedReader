@@ -6,7 +6,10 @@
 #include "QSqlTableModel"
 #include "QSqlError"
 #include "QMessageBox"
-#include <QtDebug>
+#include <QAbstractItemModel>
+#include <QPrinter>
+#include <QPrintDialog>
+
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -27,7 +30,17 @@ MainWindow::MainWindow(QWidget *parent)
     tableModel->setTable("Cards");
     tableModel->select();
 
-    ui->tableView->setModel(tableModel);
+
+
+    //Used for the search function
+    proxy = new QSortFilterProxyModel;
+
+    proxy->setSourceModel(tableModel);
+    proxy->setFilterCaseSensitivity(Qt::CaseInsensitive);
+    proxy->setFilterKeyColumn(-1);
+    proxy->setFilterFixedString("");
+
+    ui->tableView->setModel(proxy);
 
 
 }
@@ -64,13 +77,35 @@ void MainWindow::on_PBRefresh_clicked()
     tableModel->selectRow(0);
 
     ui->PBeditOrder->setEnabled(false);
+
+    ui->PBprintOrder->setEnabled(false);
+
 }
 
 void MainWindow::updateDB() {
 
     tableModel->select();
 
-    ui->PBeditOrder->setEnabled(false);
+    ui->tableView->sortByColumn(0,Qt::DescendingOrder);
+
+    ui->tableView->selectRow(0);
+
+
+    //Does a cleaning to add the newdly created for the list required for edits
+    rowInfo.clear();
+
+    for (int i = 0; i < 8; i++) {
+
+
+        rowInfo.append(proxy->index(0,i).data().toString());
+
+
+    }
+
+
+    ui->PBeditOrder->setEnabled(true);
+    ui->PBprintOrder->setEnabled(true);
+
 
 }
 
@@ -79,6 +114,8 @@ void MainWindow::updateDB() {
 void MainWindow::on_tableView_pressed(const QModelIndex &index)
 {
     ui->PBeditOrder->setEnabled(true);
+
+    ui->PBprintOrder->setEnabled(true);
 
     rowInfo.clear();
 
@@ -89,7 +126,7 @@ void MainWindow::on_tableView_pressed(const QModelIndex &index)
 
     for (int i = 0; i < tableModel->columnCount(); i++) {
 
-        rowInfo.append(tableModel->index(test, i).data().toString());
+        rowInfo.append(proxy->index(test, i).data().toString());
 
 
     }
@@ -112,5 +149,36 @@ void MainWindow::on_PBeditOrder_clicked()
 QList<QString> MainWindow::getOrderInfo() {
 
     return rowInfo;
+
+}
+
+
+void MainWindow::on_LEsearch_textEdited(const QString &arg1)
+{
+    searchText = arg1;
+
+    proxy->setFilterFixedString(searchText);
+
+
+}
+
+void MainWindow::on_PBprintOrder_clicked()
+{
+
+    QPrinter printer;
+
+    printer.setPrinterName("desired printer name");
+
+    QPrintDialog dialog (&printer, this);
+
+
+    if (dialog.exec() == QDialog::Rejected) {
+
+        return;
+
+    }
+
+    //need to create a file to set up the images of rapid pass and fac code + code
+
 
 }

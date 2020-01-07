@@ -30,13 +30,13 @@ neworderwindow::neworderwindow(QWidget *parent) :
 
             while(!ridOfDuplicates.contains(query.value(1).toString())) {
 
-                 ui->CBname->addItem(query.value(1).toString());
                  ridOfDuplicates.insert(query.value(1).toString());
 
                  //Very rough approach but easy to work with since it stores all the values of interest from the last use
                  facilityMap.insert(query.value(1).toString(),query.value(2).toString());
                  finalMap.insert(query.value(1).toString(),query.value(4).toString());
                  quantityMap.insert(query.value(1).toString(), query.value(5).toString());
+
 
 
 
@@ -47,8 +47,23 @@ neworderwindow::neworderwindow(QWidget *parent) :
 
     } else {
 
-        QMessageBox::critical(this, "Error", mDatabase.lastError().text());
+        QMessageBox::critical(this, "Error", query.lastError().text());
     }
+
+
+    //Sorting the names in ascending order
+
+    QList<QString> temp = ridOfDuplicates.toList();
+
+    temp.sort();
+
+    for (int i = 0; i < temp.size(); i++) {
+
+        ui->CBname->addItem(temp.value(i));
+
+    }
+
+
 
 
     //Hard coded the most popular card types to show images
@@ -204,7 +219,7 @@ void neworderwindow::on_PBcreate_clicked()
 
     QString date = QDate::currentDate().toString("d/M/yyyy");
 
-    QSqlQuery plsWork(mDatabase);
+    QSqlQuery plsWork;
 
     plsWork.clear();
 
@@ -312,6 +327,7 @@ void neworderwindow::on_PBcreate_clicked()
     }
 
 
+    //If an order was created, canceled or user chose to cancel
     if (orderCreated || orderCanceled || !nameDuplicateDetector()) {
 
         return;
@@ -333,7 +349,7 @@ void neworderwindow::on_PBcreate_clicked()
 
 void neworderwindow::createOrder(QString name, QString fac, QString ic, QString fc, QString quantity, QString date, QString type) {
 
-    QSqlQuery newAddition(mDatabase);
+    QSqlQuery newAddition;
 
     newAddition.clear();
 

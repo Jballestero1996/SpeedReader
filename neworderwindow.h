@@ -58,7 +58,6 @@ private slots:
 
 private:
     Ui::neworderwindow *ui;
-    QSqlDatabase mDatabase;
     QMap<QString, QString> facilityMap;
     QMap<QString, QString> finalMap;
     QMap<QString, QString> quantityMap;
@@ -68,8 +67,6 @@ private:
     bool facWasChecked;
 
     bool nameDuplicateDetector();
-
-    ;
 
     void createOrder(QString name, QString fac, QString ic, QString fc, QString quantity, QString date, QString type);
 
