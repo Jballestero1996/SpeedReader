@@ -72,10 +72,11 @@ neworderwindow::neworderwindow(QWidget *parent) :
 
     //Setting all the Line Edits of interest to be digits only
     QIntValidator *numsOnly = new QIntValidator(0, INT_MAX, this);
+    QIntValidator *facNum = new QIntValidator(0, 255, this);
 
     ui->LEic->setValidator(numsOnly);
     ui->LEfc->setValidator(numsOnly);
-    ui->LEfac->setValidator(numsOnly);
+    ui->LEfac->setValidator(facNum);
     ui->LEquantity->setValidator(numsOnly);
 
 
@@ -497,4 +498,27 @@ void neworderwindow::facAccepted(bool isAccepted) {
    facWasChecked = isAccepted;
 
 
+}
+
+void neworderwindow::setCodesForNewClient() {
+
+
+    ui->LEic->setText("1");
+    ui->LEfc->setText("2");
+    ui->LEquantity->setText("1");
+
+}
+
+void neworderwindow::on_LEfac_textEdited(const QString &arg1)
+{
+    if (arg1.toInt() > 255) {
+
+        QString validFac = arg1.at(0);
+
+        validFac += arg1.at(1);
+
+        ui->LEfac->setText(validFac);
+
+
+    }
 }

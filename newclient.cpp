@@ -19,7 +19,7 @@ newclient::newclient(QWidget *parent) :
 
 
     //making sure only digits are allowed on fac code
-    QIntValidator *numsOnly = new QIntValidator(0, INT_MAX, this);
+    QIntValidator *numsOnly = new QIntValidator(0, 255, this);
 
     ui->LEfac->setValidator(numsOnly);
 
@@ -110,6 +110,8 @@ void newclient::on_PBcreate_clicked()
 
     newOrder->updateCustomerList(ui->LEname->text(), isARepeat);
 
+    newOrder->setCodesForNewClient();
+
     newOrder->facAccepted(facilityAccepted);
 
     close();
@@ -117,4 +119,18 @@ void newclient::on_PBcreate_clicked()
 
 
 
+}
+
+void newclient::on_LEfac_textEdited(const QString &arg1)
+{
+    if (arg1.toInt() > 255) {
+
+        QString validFac = arg1.at(0);
+
+        validFac += arg1.at(1);
+
+        ui->LEfac->setText(validFac);
+
+
+    }
 }

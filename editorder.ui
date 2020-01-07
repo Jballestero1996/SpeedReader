@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Edit Order</string>
   </property>
   <widget class="QLabel" name="LBname">
    <property name="geometry">
@@ -185,6 +185,9 @@
      <height>22</height>
     </rect>
    </property>
+   <property name="editable">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QPushButton" name="PBedit">
    <property name="geometry">
@@ -196,7 +199,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Edit</string>
+    <string>Save</string>
    </property>
   </widget>
   <widget class="QPushButton" name="PBcancel">

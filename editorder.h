@@ -30,11 +30,15 @@ private slots:
 
     void on_CBtype_currentIndexChanged(const QString &arg1);
 
+    void on_LEfac_textEdited(const QString &arg1);
+
 private:
     Ui::editorder *ui;
     QList<QString> rowInfo;
     MainWindow * mainWin;
     QList<QString> cardCode;
+    bool wasFacChecked;
+    bool wasCodeChecked;
 
     void performChange();
 };

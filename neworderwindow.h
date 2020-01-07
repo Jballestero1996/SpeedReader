@@ -30,6 +30,8 @@ public:
 
     void facAccepted(bool isAccepted);
 
+    void setCodesForNewClient();
+
 
 
 private slots:
@@ -52,6 +54,8 @@ private slots:
 
 
 
+    void on_LEfac_textEdited(const QString &arg1);
+
 private:
     Ui::neworderwindow *ui;
     QSqlDatabase mDatabase;
@@ -64,6 +68,8 @@ private:
     bool facWasChecked;
 
     bool nameDuplicateDetector();
+
+    ;
 
     void createOrder(QString name, QString fac, QString ic, QString fc, QString quantity, QString date, QString type);
 

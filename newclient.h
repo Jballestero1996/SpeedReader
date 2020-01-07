@@ -29,6 +29,8 @@ private slots:
 
     void on_PBcreate_clicked();
 
+    void on_LEfac_textEdited(const QString &arg1);
+
 private:
     Ui::newclient *ui;
 

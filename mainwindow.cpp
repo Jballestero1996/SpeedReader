@@ -95,8 +95,6 @@ void MainWindow::on_tableView_pressed(const QModelIndex &index)
     }
 
 
-    qDebug() << rowInfo << endl;
-
 
 }
 
