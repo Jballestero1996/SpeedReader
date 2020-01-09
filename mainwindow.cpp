@@ -9,6 +9,7 @@
 #include <QAbstractItemModel>
 #include <QPrinter>
 #include <QPrintDialog>
+#include <QAxObject>
 
 
 
@@ -167,16 +168,30 @@ void MainWindow::on_PBprintOrder_clicked()
 
     QPrinter printer;
 
-    printer.setPrinterName("desired printer name");
+    QAxObject* test = new QAxObject("Word.Application");
 
-    QPrintDialog dialog (&printer, this);
+    QAxObject* pdoc = test->querySubObject("Documents");
 
 
-    if (dialog.exec() == QDialog::Rejected) {
+    pdoc = pdoc->querySubObject("Add()");
 
-        return;
+    QAxObject* prange = pdoc->querySubObject("Range()");
 
-    }
+    pdoc->setProperty("Visible", true);
+
+
+
+
+//    printer.setPrinterName("desired printer name");
+
+//    QPrintDialog dialog (&printer, this);
+
+
+//    if (dialog.exec() == QDialog::Rejected) {
+
+//        return;
+
+//    }
 
     //need to create a file to set up the images of rapid pass and fac code + code
 

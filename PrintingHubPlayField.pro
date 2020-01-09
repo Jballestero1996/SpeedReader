@@ -35,6 +35,7 @@ FORMS += \
     neworderwindow.ui
 
 QT += sql
+QT += axcontainer
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
